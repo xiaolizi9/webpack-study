@@ -6,3 +6,10 @@
 
 ## 安装html-webpack-plugin
 + npm i html-webpack-plugin -D
+
+## 安装sass和node-sass
++ npm i npm i sass node-sass -D
+
+## 安装style-css和css-loader
++ npm i style-css css-loader -D
+

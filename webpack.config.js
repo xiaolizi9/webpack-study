@@ -31,5 +31,20 @@ module.exports = {
             // 给引用的index.js加上hash戳,防止缓存
             hash: true
         })
-    ]
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: 'style-loader',
+                        options: {}
+                    },
+                    // css-loader用于转换css中的@import
+                    'css-loader'
+                ]
+            },
+        ]
+    }
 }
