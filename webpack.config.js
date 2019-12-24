@@ -10,8 +10,12 @@ module.exports = {
     },
     devServer: {
         port: 5000,
-        compress: true,
         contentBase: path.resolve(__dirname, 'dist'),
+        // 是否压缩
+        compress: true,
+        // 是否显示进度条
+        progress: true,
+        // 是否自动打开浏览器
         open: true
     },
     plugins: [
