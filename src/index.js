@@ -1,3 +1,3 @@
-const a = require('./a')
+require('./a.css')
 
-console.log(a)
+require('./c.scss')
