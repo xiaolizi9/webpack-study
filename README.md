@@ -24,3 +24,16 @@
 
 ## 安装terser-webpack-plugin用于优化js插件
 + npm i terser-webpack-plugin -D
+
+## 安装babel-loader,核心模块@babel/core,预设ES6 -> ES5 @babel/core
++ npm install babel-loader @babel/core @babel/preset-env -D
+
+## 安装clean-webpack-plugin每次重新
++ npm install --save-dev clean-webpack-plugin
+
+## 安装@babel/plugin-proposal-class-properties用于转换class语法
++ npm i @babel/plugin-proposal-class-properties -D
+
+
+## 安装@babel/plugin-proposal-decorators用于转换@装饰器语法
++ npm i @babel/plugin-proposal-decorators -D

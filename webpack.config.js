@@ -1,11 +1,10 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const miniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-    mode: 'production',    // 模式,分为development和production模式
+    mode: 'development',    // 模式,分为development和production模式
     entry: './src/index.js',
     output: {
         filename: 'bundle.[hash:8].js',
@@ -33,8 +32,6 @@ module.exports = {
                 // 是否源码映射,方便调试
                 sourceMap: true
             }),
-            // 压缩css
-            new OptimizeCssAssetsPlugin()
         ],
     },
     plugins: [
@@ -50,34 +47,26 @@ module.exports = {
             // 给引用的index.js加上hash戳,防止缓存
             hash: true
         }),
-        new miniCssExtractPlugin({
-            filename: 'index.css'
-        }),
+        new CleanWebpackPlugin()
     ],
     module: {
         rules: [
             // loader的顺序：先下后上，先右后左
             {
-                test: /\.css$/,
+                test: /\.js$/,
                 use: [
-                    // 使用miniCssExtractPlugin的loader把打包后的css文件通过link标签插入到index.html中
-                    miniCssExtractPlugin.loader,
-                    // 解析.css文件中的@import语法
-                    'css-loader',
-                    // 引入postcss-loader并且创建postcss.config.js文件
-                    'postcss-loader',
-                ]
-            },
-            {
-                test: /\.scss$/,
-                use: [
-                    // 使用miniCssExtractPlugin的loader把打包后的css文件通过link标签插入到index.html中
-                    miniCssExtractPlugin.loader,
-                    'css-loader',
-                    // 引入postcss-loader并且创建postcss.config.js文件
-                    'postcss-loader',
-                    // 把.scss文件转换成.css文件
-                    'sass-loader'
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: [
+                                '@babel/preset-env',
+                            ],
+                            plugins: [
+                                ["@babel/plugin-proposal-decorators", { "legacy": true }],
+                                ["@babel/plugin-proposal-class-properties", { "loose": true }]
+                            ]
+                        }
+                    }
                 ]
             }
         ]
