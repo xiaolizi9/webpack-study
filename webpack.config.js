@@ -1,7 +1,9 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const TerserJSPlugin = require('terser-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const TerserJSPlugin = require('terser-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+// 引入webpack模块,使用webpack.ProvidePlugin全局引入模块
+const webpack = require('webpack')
 
 module.exports = {
     mode: 'development',    // 模式,分为development和production模式
@@ -37,23 +39,15 @@ module.exports = {
             // 给引用的index.js加上hash戳,防止缓存
             hash: true
         }),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        // 全局引入jquery
+        new webpack.ProvidePlugin({
+            $: 'jquery'
+        })
     ],
     module: {
         rules: [
             // loader的顺序：先下后上，先右后左
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'eslint-loader',
-                        options: {
-                            enforce: 'pre'
-                        }
-                    }
-                ]
-            },
             {
                 test: /\.js$/,
                 use: [
