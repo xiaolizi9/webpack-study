@@ -1,28 +1,17 @@
-
-const fn = () => {
-    console.log('这是一个函数')
+// Generator函数
+function* gen() {
+    yield 'one'
 }
-fn()
+console.log(gen().next())
 
-class Point {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    toString() {
-        return '(' + this.x + ', ' + this.y + ')';
-    }
+function* genTwo() {
+    yield 'two'
 }
+console.log(genTwo().next())
 
-var b = new Point('x值','y值');
-console.log(b)
+// ES7数组的includes方法
+// @babel/polyfill会在数组原型上添加Array.prototype.includes
+require("@babel/polyfill");
+const arr = ['小栗子','中栗子','大栗子']
 
-@testable
-class MyClass {};
-
-function testable(target) {
-    target.isTestable = true;
-}
-
-MyClass.isTestable;  // true
+console.log(arr.includes('小栗子'))
