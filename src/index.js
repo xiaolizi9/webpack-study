@@ -15,3 +15,7 @@ require("@babel/polyfill");
 const arr = ['小栗子','中栗子','大栗子']
 
 console.log(arr.includes('小栗子'))
+
+let a = '我是未声明的变量'
+
+// console.log(a)
