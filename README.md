@@ -34,6 +34,14 @@
 ## 安装@babel/plugin-proposal-class-properties用于转换class语法
 + npm i @babel/plugin-proposal-class-properties -D
 
-
 ## 安装@babel/plugin-proposal-decorators用于转换@装饰器语法
 + npm i @babel/plugin-proposal-decorators -D
+
+## 安装@babel/plugin-transform-runtime用于转换ES7,ES8等更高级的语法,生成一些脚本,比如：Generator函数
++ npm i @babel/plugin-transform-runtime -D 
+
+## 安装@babel/runtime用于打包的时候把脚本带进去
++ npm i @babel/runtime --save
+
+## 安装@babel/polyfill用于在原型上添加ES7的方法,比如会在数组原型上添加Array.prototype.includes
++ npm i @babel/polyfill --save
