@@ -7,18 +7,8 @@ module.exports = {
     mode: 'development',    // 模式,分为development和production模式
     entry: './src/index.js',
     output: {
-        filename: 'bundle.[hash:8].js',
+        filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist')  //必须为绝对路径
-    },
-    // devServer默认取src下的index.js做为入口
-    devServer: {
-        port: 5000,
-        // 是否压缩
-        compress: true,
-        // 是否显示进度条
-        progress: true,
-        // 是否自动打开浏览器
-        open: true
     },
     // 优化项,webpack4新增
     optimization: {
@@ -54,6 +44,18 @@ module.exports = {
             // loader的顺序：先下后上，先右后左
             {
                 test: /\.js$/,
+                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: 'eslint-loader',
+                        options: {
+                            enforce: 'pre'
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.js$/,
                 use: [
                     {
                         loader: 'babel-loader',
@@ -70,7 +72,7 @@ module.exports = {
                     }
                 ],
                 include: path.resolve(__dirname, 'src'),
-                exclude: path.resolve(__dirname, 'node_modules'),
+                exclude: /node_modules/,
             }
         ]
     }

@@ -45,3 +45,9 @@
 
 ## 安装@babel/polyfill用于在原型上添加ES7的方法,比如会在数组原型上添加Array.prototype.includes
 + npm i @babel/polyfill --save
+
+## 安装eslint和eslint-loader用于校验JS规范
++ npm i eslint eslint-loader -D
+
+## 紧接着你应该设置一个配置文件：
++ $ ./node_modules/.bin/eslint --init
