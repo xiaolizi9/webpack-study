@@ -1,1 +1,1 @@
-// 我是入口文件
+require('./index.css')
