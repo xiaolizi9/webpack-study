@@ -25,3 +25,5 @@
 + 启用CommonJS模块语法：esModule: false
 + 写到这里我发现,无论是使用html-loader还是html-withimg-loader,只要是在url-loader或者file-loader的options下面添加esModule:false就会完美兼容,可能是url-loader3.0+以及file-loader5.0+更新后的缘故,如果使用url-loader3.0-以及file-loader5.0-以下的版本,不用添加esModule:false
 
+## Tips
++ 当需要给打包后的文件划分目录的时候,如果选项是filename,则直接在前面加上目录名即可,例如：filename: 'css/index.css';比如像img这种文件没有filename选项,则在outputPath的目录名后加/,例如:outputPath: 'img/';如果在output中设置publicPath,则在outputPath的目录名前后加/,例如:outputPath: '/img/';如果在url-loader的options中设置publicPath,则会覆盖outputPath

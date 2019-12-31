@@ -10,8 +10,9 @@ module.exports = {
     mode: 'development',    // 模式,分为development和production模式
     entry: './src/index.js',
     output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist')  //必须为绝对路径
+        filename: 'js/bundle.js',
+        path: path.resolve(__dirname, 'dist'), //必须为绝对路径
+        // publicPath: 'https://cdn.xiaolizi.com' //公共路径
     },
     // 优化项,webpack4新增
     optimization: {
@@ -46,7 +47,7 @@ module.exports = {
             $: 'jquery'
         }),
         new miniCssExtractPlugin({
-            filename: 'index.css'
+            filename: 'css/index.css'
         })
     ],
     module: {
@@ -62,7 +63,11 @@ module.exports = {
                     {
                         loader: 'url-loader',
                         options: {
-                            esModule: false
+                            limit: 1,
+                            esModule: false,
+                            outputPath: 'img/',
+                            // 只给图片路径加cdn
+                            // publicPath: 'https://cdn.xiaolizi.com' 
                         }
                     }
                 ]
@@ -84,8 +89,8 @@ module.exports = {
                                 ["@babel/plugin-proposal-decorators", { "legacy": true }],
                                 ["@babel/plugin-proposal-class-properties", { "loose": true }],
                                 ["@babel/plugin-transform-runtime"]
-                            ]
-                        }
+                            ],
+                        },
                     }
                 ],
                 include: path.resolve(__dirname, 'src'),
