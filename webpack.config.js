@@ -1,101 +1,30 @@
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const TerserJSPlugin = require('terser-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const miniCssExtractPlugin = require('mini-css-extract-plugin')
-// 引入webpack模块,使用webpack.ProvidePlugin全局引入模块
-const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    mode: 'development',    // 模式,分为development和production模式
-    entry: './src/index.js',
-    output: {
-        filename: 'js/bundle.js',
-        path: path.resolve(__dirname, 'dist'), //必须为绝对路径
-        // publicPath: 'https://cdn.xiaolizi.com' //公共路径
+    mode: 'development',
+    entry: {
+        index: './src/index.js',
+        other: './src/other.js'
     },
-    // 优化项,webpack4新增
-    optimization: {
-        // 自己理解:minimizer覆盖默认的优化
-        minimizer: [
-            new TerserJSPlugin({
-                // 是否缓存
-                cache: true,
-                // 是否并发打包
-                parallel: true,
-                // 是否源码映射,方便调试
-                sourceMap: true
-            }),
-        ],
+    output: {
+        // [name]相当于是一个变量,把入口的所有文件依次替换进去
+        filename: "[name].js",
+        path: path.resolve(__dirname, 'dist')
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            template: './src/index.html',
-            filename: 'index.html',
-            minify: {
-                // 去掉多余空格,变成一行
-                collapseWhitespace: true,
-                // 去掉双引号
-                removeAttributeQuotes: true
-            },
-            // 给引用的index.js加上hash戳,防止缓存
-            hash: true
-        }),
         new CleanWebpackPlugin(),
-        // 全局引入jquery
-        new webpack.ProvidePlugin({
-            $: 'jquery'
+        new HtmlWebpackPlugin({
+            template: './index.html',
+            filename: "index.html",
+            // chunks是代码块,表示把入口的哪些文件注入当前html文件中
+            chunks: ['index']
         }),
-        new miniCssExtractPlugin({
-            filename: 'css/index.css'
+        new HtmlWebpackPlugin({
+            template: './index.html',
+            filename: "other.html",
+            chunks: ['other']
         })
-    ],
-    module: {
-        rules: [
-            // loader的顺序：先下后上，先右后左
-            {
-                test: /\.html$/,
-                use: ['html-loader']
-            },
-            {
-                test: /\.(png|jpg|gif)$/,
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 1,
-                            esModule: false,
-                            outputPath: 'img/',
-                            // 只给图片路径加cdn
-                            // publicPath: 'https://cdn.xiaolizi.com' 
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.css$/,
-                use: [miniCssExtractPlugin.loader, 'css-loader']
-            },
-            {
-                test: /\.js$/,
-                use: [
-                    {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: [
-                                '@babel/preset-env',
-                            ],
-                            plugins: [
-                                ["@babel/plugin-proposal-decorators", { "legacy": true }],
-                                ["@babel/plugin-proposal-class-properties", { "loose": true }],
-                                ["@babel/plugin-transform-runtime"]
-                            ],
-                        },
-                    }
-                ],
-                include: path.resolve(__dirname, 'src'),
-                exclude: /node_modules/,
-            }
-        ]
-    }
+    ]
 }
