@@ -1,0 +1,10 @@
+body{
+    /* css-loader会解析css中的图片路径 */
+    color: red;
+}
+.logo{
+    width: 500px;
+    height: 500px;
+    background: url('./log.png');
+    border: 1px solid #cccccc;
+}

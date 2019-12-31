@@ -2,6 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const TerserJSPlugin = require('terser-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const miniCssExtractPlugin = require('mini-css-extract-plugin')
 // 引入webpack模块,使用webpack.ProvidePlugin全局引入模块
 const webpack = require('webpack')
 
@@ -43,11 +44,41 @@ module.exports = {
         // 全局引入jquery
         new webpack.ProvidePlugin({
             $: 'jquery'
+        }),
+        new miniCssExtractPlugin({
+            filename: 'index.css'
         })
     ],
     module: {
         rules: [
             // loader的顺序：先下后上，先右后左
+            {
+                test: /\.html$/,
+                use: ['html-withimg-loader']
+            },
+            // {
+            //     test: /\.(png|jpg|gif)$/,
+            //     use: {
+            //         loader:'file-loader'
+            //     }
+            // },
+            {
+                test: /\.(png|jpg|gif)$/,
+                use: [
+                    {
+                        // url-loader 功能类似于 file-loader，但是在文件大小（单位 字节）低于指定的限制时，可以转换成base64位,使用html-withimg-loader不要转换base64,会有bug,直接limit设置1即可。
+                        loader: 'url-loader',
+                        options: {
+                            // limit为必填项,填写200*1024代表只要是低于200kb大小的图片都会转成base64               
+                            limit: 200*1024
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.css$/,
+                use: [miniCssExtractPlugin.loader, 'css-loader']
+            },
             {
                 test: /\.js$/,
                 use: [
