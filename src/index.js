@@ -1,1 +1,6 @@
-console.log('我是index页')
+class Person {
+    constructor() {
+        console.lo('出错了')
+    }
+}
+const person = new Person()
