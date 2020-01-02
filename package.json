@@ -1,13 +1,12 @@
 {
   "name": "webpackStydy",
   "version": "1.0.0",
-  "description": "",
+  "description": "+ npm i webpack-merge -D",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:dev": "webpack --config webpack.dev.js",
-    "build:prod": "webpack --config webpack.prod.js",
-    "dev": "webpack-dev-server --open"
+    "dev": "webpack-dev-server --open",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -21,18 +20,16 @@
   },
   "homepage": "https://github.com/XiaoLizi29/webpack-study#readme",
   "devDependencies": {
-    "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^5.1.1",
-    "css-loader": "^3.4.0",
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "babel-loader": "^8.0.6",
     "html-webpack-plugin": "^3.2.0",
-    "mini-css-extract-plugin": "^0.9.0",
     "webpack": "^4.41.5",
+    "webpack-clean-plugin": "^0.2.3",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-middleware": "^3.7.2",
-    "webpack-dev-server": "^3.10.1",
-    "webpack-merge": "^4.2.2"
+    "webpack-dev-server": "^3.10.1"
   },
   "dependencies": {
-    "bootstrap": "^4.4.1"
+    "jquery": "^3.4.1"
   }
 }

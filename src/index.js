@@ -1,2 +1,2 @@
-console.log(BASEURL)
-console.log(process.env.NODE_ENV)
+import jquery from 'jquery'
+console.log(jquery)
