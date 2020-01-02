@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const WebpackCleanPlugin = require('webpack-clean-plugin')
+const webpack = require('webpack')
 
 module.exports = {
     mode: 'development',
@@ -13,6 +14,14 @@ module.exports = {
         new WebpackCleanPlugin(),
         new HtmlWebpackPlugin({
             template: './public/index.html'
+        }),
+        // 使用IgnorePlugin插件,防止在import或者require时,生成该正则表达式匹配的模块
+        // resourceRegExp：匹配(test)资源请求路径的正则表达式。
+        // contextRegExp：（可选）匹配(test)资源上下文（目录）的正则表达式。
+        new webpack.IgnorePlugin({
+            // 在momont模块中忽略引入的./locale路径资源
+            resourceRegExp: /\.\/locale/,
+            contextRegExp: /momont/
         })
     ],
     module: {
@@ -28,5 +37,10 @@ module.exports = {
                 }
             }
         ]
+    },
+    resolve: {
+        alias: {
+            'zh-cn': path.resolve(__dirname, 'node_modules/moment/locale/zh-cn.js')
+        }
     }
 }
