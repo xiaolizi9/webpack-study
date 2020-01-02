@@ -3,3 +3,6 @@
 
 ## 安装copy-webpack-plugin用于将文件或者目录复制到输出目录
 + npm i copy-webpack-plugin -D
+
+## 安装webpack-dev-middleware用于在服务端启用webpack
++ npm i webpack-dev-middleware -D
