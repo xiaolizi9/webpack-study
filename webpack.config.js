@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
     mode: 'production',
@@ -11,30 +12,6 @@ module.exports = {
         // [name]相当于是一个变量,把入口的所有文件依次替换进去
         filename: "[name].js",
         path: path.resolve(__dirname, 'dist')
-    },
-    devServer: {
-        // 1. 启用代理跨域
-        // proxy: {
-        //     // 只要是请求/api开头的都会被代理到http://localhost:3000
-        //     '/api': {
-        //         target: 'http://localhost:3000',
-        //         // 重写/api路径,比如访问http://localhost:8080/api/user,则会被代理到http://localhost:3000/user
-        //         pathRewrite: {
-        //             '^/api': ''
-        //         }
-        //     }
-        // }
-
-        // 2. mock模拟数据,单纯的想模拟数据,不存在跨域
-        // 在服务内部的所有其他中间件之前,提供执行自定义中间件的功能,before是一个钩子函数。
-        // before(app) {
-        //     app.get('/api/user', (req, res) => {
-        //         res.json({
-        //             data: '我是mock模拟的数据'
-        //         })
-        //     })
-        // }
-        // 3. 有服务端,但是不用代理来处理,在服务端内部启一个webpack模块,端口用服务端的端口,这样也不会存在跨域,详见server.js
     },
     // 监控代码变化,实时打包
     watch: true,
@@ -47,11 +24,37 @@ module.exports = {
         // 排除文件夹
         ignored: /node_modules/
     },
+    resolve: {
+        // 告诉 webpack 解析模块时应该搜索的目录,使用绝对路径，将只在给定目录中搜索。如果你想要添加一个目录到模块搜索目录，此目录优先于 node_modules搜索。
+        modules: [path.resolve(__dirname, 'node_modules')],
+        // 别名
+        alias: {
+            bootstrap: 'bootstrap/dist/css/bootstrap.css',
+            '@': path.resolve(__dirname, 'src')
+        },
+        // 省略扩展名,自动解析确定的扩展
+        extensions: ['.js', '.css', '.json']
+        // 在 package.json 中使用哪个字段导入模块,比如只导入bootstrap的css可以这样配
+        // mainFields: ['style', 'main'],
+        // 解析目录时要使用的文件名,不常用
+        // mainFiles:['index']
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: './index.html',
             filename: "index.html"
         }),
-        new CleanWebpackPlugin()
-    ]
+        new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin({
+            filename: './css/index.css'
+        })
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                loader: [MiniCssExtractPlugin.loader, 'css-loader']
+            }
+        ]
+    }
 }
