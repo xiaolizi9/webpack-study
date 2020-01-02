@@ -1,8 +1,2 @@
-## 安装clean-webpack-plugin用于每次打包清空output.path文件夹
-+ npm i clean-webpack-plugin -D
-
-## 安装copy-webpack-plugin用于将文件或者目录复制到输出目录
-+ npm i copy-webpack-plugin -D
-
-## 安装webpack-dev-middleware用于在服务端启用webpack
-+ npm i webpack-dev-middleware -D
+## 安装webpack-merge用于配置不同环境下的配置,把两个文件的配置进行合并
++ npm i webpack-merge -D
