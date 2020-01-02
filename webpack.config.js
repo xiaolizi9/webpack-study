@@ -1,6 +1,8 @@
 const path = require('path')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = {
     mode: 'production',
@@ -24,10 +26,19 @@ module.exports = {
         ignored: /node_modules/
     },
     plugins: [
-        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: './index.html',
             filename: "index.html"
-        })
+        }),
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin([
+            {
+                from: './public',
+                // to:默认是'./',output.path目录,也就是dist目录,添加public表示在dist目录下复制一份public文件夹
+                to:'./public'
+            }
+        ]),
+        // 为每个打包后的chunk文件头部加上版权(banner)
+        new webpack.BannerPlugin('版权归 XiaoLizi29 所有')
     ]
 }
