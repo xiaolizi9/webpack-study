@@ -8,8 +8,5 @@
 </head>
 <body>
     <div id="root"></div>
-    <!-- 这里要用/,因为webpack-dev-server运行dev命令后的所有文件都是生成在内存的根路径上。 -->
-    <!-- 必须要使用script引入_Dll_react.js文件,不然会找不到该变量,因为入口文件在打包后,会导出该变量,如果不script引入,就会导致找不到该变量报错 -->
-    <script src="/_Dll_react.js"></script>
 </body>
 </html>

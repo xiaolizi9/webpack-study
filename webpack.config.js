@@ -1,7 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const WebpackCleanPlugin = require('webpack-clean-plugin')
-const webpack = require('webpack')
+const HappyPack = require('happypack')
 
 module.exports = {
     mode: 'development',
@@ -11,27 +11,19 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
     },
     devServer: {
-        port: 5000,
         open: true,
         // 显示进度条
-        progress: true,
-        contentBase: path.resolve(__dirname, 'dist')
+        progress: true
     },
     plugins: [
         new WebpackCleanPlugin(),
         new HtmlWebpackPlugin({
             template: './public/index.html'
         }),
-        // 引用模块时,先去任务清单中找,找不到再打包模块
-        new webpack.DllReferencePlugin({
-            manifest: path.resolve(__dirname, 'dist', 'manifest.json')
-        }),
-    ],
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                use: {
+        new HappyPack({
+            id: 'js',
+            use: [
+                {
                     loader: 'babel-loader',
                     options: {
                         presets: [
@@ -40,6 +32,22 @@ module.exports = {
                         ]
                     }
                 }
+            ]
+        }),
+        new HappyPack({
+            id: 'css',
+            use: ['style-loader', 'css-loader']
+        })
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                use: 'HappyPack/loader?id=js'
+            },
+            {
+                test: /\.css$/,
+                use: 'HappyPack/loader?id=css'
             }
         ]
     }
