@@ -1,7 +1,5 @@
-import moment from 'moment'
+import React from 'react'
+import { render } from 'react-dom'
 
-require('zh-cn')
-
-const date = moment().format('MMMM Do YYYY, h:mm:ss a')
-
-console.log(date)
+// 此处的window.root表示index.html中的<div id="root"></div>
+render(<h1>我是reactDOM渲染的</h1>, window.root)
