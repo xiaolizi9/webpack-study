@@ -1,10 +1,9 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const WebpackCleanPlugin = require('webpack-clean-plugin')
-const HappyPack = require('happypack')
 
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     entry: './src/index.js',
     output: {
         filename: '[name].js',
@@ -19,11 +18,13 @@ module.exports = {
         new WebpackCleanPlugin(),
         new HtmlWebpackPlugin({
             template: './public/index.html'
-        }),
-        new HappyPack({
-            id: 'js',
-            use: [
-                {
+        })
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                use: {
                     loader: 'babel-loader',
                     options: {
                         presets: [
@@ -32,22 +33,6 @@ module.exports = {
                         ]
                     }
                 }
-            ]
-        }),
-        new HappyPack({
-            id: 'css',
-            use: ['style-loader', 'css-loader']
-        })
-    ],
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                use: 'HappyPack/loader?id=js'
-            },
-            {
-                test: /\.css$/,
-                use: 'HappyPack/loader?id=css'
             }
         ]
     }
