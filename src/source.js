@@ -1,1 +1,1 @@
-export default '我是点击才会加载的资源,也就是懒加载'
+export default '我是要热更新的文件'
