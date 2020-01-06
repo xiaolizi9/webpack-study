@@ -2,4 +2,4 @@ import './a'
 import './b'
 import './jquery'
 
-console.log('我是index入口')
+console.log('我是other入口')
