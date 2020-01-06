@@ -1,5 +1,1 @@
-## 安装happypack进行多线程打包
-+ npm i happypack
-
-## 安装css-loader和style-loader
-+ npm i css-loader style-loader -D
+## 使用import完成懒加载,原理是jsonp原理,vue的路由懒加载就是这样实现的

@@ -1,5 +1,11 @@
-import './a'
-import './b'
-import './jquery'
+const btn = document.createElement('button')
 
-console.log('我是index入口')
+btn.innerHTML = '点击我懒加载js文件'
+
+btn.addEventListener('click', () => {
+    import('./source').then(data => {
+        console.log(data.default)
+    })
+})
+
+document.body.appendChild(btn)
